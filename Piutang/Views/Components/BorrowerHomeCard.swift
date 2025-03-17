@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct BorrowerHomeCard: View {
+    var debt: Debt
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Nama Peminjam")
-                    Text("12/03/2025").foregroundStyle(.secondary)
+                    Text(debt.name)
+                    Text(convertDateToString(debt.date)).foregroundStyle(.secondary)
                 }.padding()
                 Spacer()
                 VStack(alignment: .trailing, spacing: 10) {
                     Text("Sisa Piutang").font(.caption).foregroundStyle(.secondary)
-                    Text("Rp500.000").font(.title3).fontWeight(.semibold).foregroundStyle(.orange)
+                    Text("Rp\(debt.amount, specifier: "%.2f")").font(.headline).fontWeight(.semibold).foregroundStyle(.orange)
                 }
                 Image(systemName: "chevron.right").padding()
             }.frame(height: 100)
@@ -28,6 +29,8 @@ struct BorrowerHomeCard: View {
     }
 }
 
-#Preview {
-    BorrowerHomeCard()
+func convertDateToString(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd MMMM yyyy"
+    return dateFormatter.string(from: date)
 }

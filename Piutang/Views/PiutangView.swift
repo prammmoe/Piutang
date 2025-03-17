@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PiutangView: View {
+    @StateObject private var viewModel = DebtViewModel()
     @State private var presentSheet: Bool = false
     @State private var searchText: String = ""
     
@@ -28,11 +29,11 @@ struct PiutangView: View {
                         Text("Total Sisa Piutang")
                             .font(.callout)
                             .foregroundStyle(.primary)
-                        Text("Rp. 100.000")
+                        Text("Rp\(viewModel.totalUnpaid, specifier: "%.2f")")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundStyle(.green)
-                        Text("Kamu punya 4 orang yang meminjam")
+                        Text("Kamu punya \(viewModel.totalDebtor) orang yang meminjam")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -60,8 +61,8 @@ struct PiutangView: View {
                         }
                     }
                     
-                    ForEach(0..<10) { _ in
-                        BorrowerHomeCard()
+                    ForEach(viewModel.debts) { debt in
+                        BorrowerHomeCard(debt: debt)
                     }
                 }
             }
