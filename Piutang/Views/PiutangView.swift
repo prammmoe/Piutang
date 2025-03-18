@@ -25,21 +25,22 @@ struct PiutangView: View {
         NavigationStack {
             List {
                 Section {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .center, spacing: 8) {
                         Text("Total Sisa Piutang")
                             .font(.callout)
                             .foregroundStyle(.primary)
                         Text("Rp\(viewModel.totalUnpaid, specifier: "%.2f")")
-                            .font(.title)
+                            .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundStyle(.green)
                         Text("Kamu punya \(viewModel.totalDebtor) orang yang meminjam")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 8)
                 }
+                .listRowSeparator(.hidden)
                 
                 Section {
                     HStack {
@@ -65,8 +66,9 @@ struct PiutangView: View {
                         BorrowerHomeCard(debt: debt)
                     }
                 }
+                .listRowSeparator(.hidden)
             }
-            .listStyle(.grouped)
+            .listStyle(.plain)
             .navigationTitle("Piutang")
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .toolbar {

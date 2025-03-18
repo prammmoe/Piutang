@@ -13,13 +13,13 @@ struct BorrowerHomeCard: View {
         VStack {
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(debt.name)
-                    Text(convertDateToString(debt.date)).foregroundStyle(.secondary)
+                    Text(debt.name).font(.headline)
+                    Text(convertDateToString(debt.date)).font(.caption).foregroundStyle(.secondary)
                 }.padding()
                 Spacer()
                 VStack(alignment: .trailing, spacing: 10) {
                     Text("Sisa Piutang").font(.caption).foregroundStyle(.secondary)
-                    Text("Rp\(debt.amount, specifier: "%.2f")").font(.headline).fontWeight(.semibold).foregroundStyle(.orange)
+                    Text("Rp\(debt.amount, specifier: "%.2f")").font(.headline).fontWeight(.semibold).foregroundStyle(.primary)
                 }
                 Image(systemName: "chevron.right").padding()
             }.frame(height: 100)
