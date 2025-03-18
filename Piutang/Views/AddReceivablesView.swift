@@ -14,7 +14,7 @@ struct AddReceivablesView: View {
     @State private var date: Date = Date()
     @State private var showAlert: Bool = false
     
-    @StateObject private var viewModel = DebtViewModel()
+    @ObservedObject var viewModel = DebtViewModel()
     
     var body: some View {
         NavigationView {
@@ -29,11 +29,8 @@ struct AddReceivablesView: View {
                     }
                     VStack(alignment: .center) {
                         Button(action: {
-                            guard let amount = Double(amount), !isEmpty(name) else {
-                                self.showAlert = true
-                                return
-                            }
-                            viewModel.addDebt(name: name, amount: amount, date: date)
+                            guard let amountValue = Double(amount), !name.isEmpty else { return }
+                            viewModel.addDebt(name: name, amount: amountValue, date: date)
                             dismiss()
                         }) {
                             Text("Tambah")

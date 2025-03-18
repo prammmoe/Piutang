@@ -8,7 +8,21 @@
 import Foundation
 
 class DebtViewModel: ObservableObject {
+    // State to hold the search text
+    @Published var searchText: String = ""
     @Published var debts: [Debt] = []
+    
+    // Filtered debts functionality
+    var filteredDebts: [Debt] {
+        guard !searchText.isEmpty else {
+            return debts
+        }
+        
+        // Return person name of the debt
+        return debts.filter {
+            $0.name.lowercased().contains(searchText.lowercased())
+        }
+    }
     
     var totalUnpaid: Double {
         debts.filter { !$0.isPaid }.reduce(0) { $0 + $1.amount }
@@ -16,8 +30,10 @@ class DebtViewModel: ObservableObject {
     
     // Get count of person that borrow money
     var totalDebtor: Int {
-        let unpaidDebtors = debts.filter { !$0.isPaid }.map { $0.name }
-        return Set(unpaidDebtors).count // Count unique debtor
+        let unpaidDebtors = debts.count
+//        let unpaidDebtors = debts.filter { !$0.isPaid }.map { $0.name } # Unique debtors
+//        return Set(unpaidDebtors).count // Count unique debtor
+        return unpaidDebtors
     }
     
     // Dummy Data
@@ -30,7 +46,7 @@ class DebtViewModel: ObservableObject {
             Debt(id: UUID(), name: "Dewi", amount: 900000, date: Date(), isPaid: false) // Hari ini
         ]
     }
-    
+        
     // Function to add debt
     func addDebt(name: String, amount: Double, date: Date) {
         let newDebt = Debt(id: UUID(), name: name, amount: amount, date: date, isPaid: false)
